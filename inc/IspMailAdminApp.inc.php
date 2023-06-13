@@ -404,7 +404,15 @@ class IspMailAdminApp {
     {
         session_cache_limiter('nocache');
         session_name(preg_replace('/[^a-z0-9_]+/i','_',$sAppName));
-        session_set_cookie_params(0, dirname($_SERVER['PHP_SELF']), '', false, true);
+        session_set_cookie_params([
+            'lifetime' => 0,
+            'path' => dirname($_SERVER['PHP_SELF']),
+            'domain' => '',
+            'secure' => false,
+            'httponly' => true,
+            'samesite' => 'Strict'
+        ]);
+        
         return(session_start());
     }
     /**
